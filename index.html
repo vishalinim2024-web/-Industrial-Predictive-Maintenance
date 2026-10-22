@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Equipment Monitoring Dashboard</title>
+    <!-- Tailwind CSS for modern, clean UI layout -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen p-6">
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <!-- Header -->
+        <header class="border-b border-gray-800 pb-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-white">Predictive Maintenance & Monitoring System</h1>
+                <p class="text-gray-400 mt-1">Real-time simulated shop-floor metrics and telemetry analytics.</p>
+            </div>
+            <div class="flex items-center space-x-2 bg-gray-800 px-4 py-2 rounded-lg border border-gray-700">
+                <span class="h-3 w-3 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-sm font-medium text-gray-300">Live Telemetry Feed</span>
+            </div>
+        </header>
+
+        <!-- KPI Summary Cards (Enhancement Requirement) -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md">
+                <h3 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Total Operational Machines</h3>
+                <p id="kpi-operational" class="text-4xl font-bold mt-2 text-green-400">0 / 5</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md">
+                <h3 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Total Cumulative Downtime</h3>
+                <p id="kpi-downtime" class="text-4xl font-bold mt-2 text-yellow-500">0 hrs</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-red-900/50 bg-gradient-to-br from-gray-800 to-red-950/20 shadow-md">
+                <h3 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Highest Maintenance Risk</h3>
+                <p id="kpi-highest-risk" class="text-2xl font-bold mt-2 text-red-400 truncate">None</p>
+            </div>
+        </section>
+
+        <!-- Dynamic Controls & Filters (Enhancement Requirement) -->
+        <section class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex flex-wrap gap-4 items-center justify-between">
+            <div class="flex flex-wrap gap-4 items-center">
+                <div>
+                    <label class="block text-xs text-gray-400 font-semibold mb-1">Production Unit</label>
+                    <select id="filter-unit" class="bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-blue-500">
+                        <option value="All">All Units</option>
+                        <option value="Assembly-A">Assembly Line A</option>
+                        <option value="Stamping-B">Stamping Unit B</option>
+                        <option value="CNC-Shop">CNC Shop</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 font-semibold mb-1">Operational Status</label>
+                    <select id="filter-status" class="bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-blue-500">
+                        <option value="All">All Statuses</option>
+                        <option value="Running">Running</option>
+                        <option value="Maintenance Due">Maintenance Due</option>
+                        <option value="Down">Down</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-xs text-gray-400">
+                *Vibration warning threshold set to <span class="text-yellow-400 font-bold">7.5 mm/s</span>
+            </div>
+        </section>
+
+        <!-- Main Workspace: Equipment Table -->
+        <main class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden shadow-xl">
+            <div class="p-5 border-b border-gray-700 bg-gray-800/50">
+                <h2 class="text-lg font-bold text-white">Live Asset Telemetry</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-900/60 text-gray-400 text-xs font-semibold uppercase border-b border-gray-700">
+                            <th class="p-4">Machine ID</th>
+                            <th class="p-4">Production Unit</th>
+                            <th class="p-4">Operating Hours</th>
+                            <th class="p-4">Temperature</th>
+                            <th class="p-4">Vibration Level</th>
+                            <th class="p-4">Recent Downtime</th>
+                            <th class="p-4">Next Due Date</th>
+                            <th class="p-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="machine-table-body" class="divide-y divide-gray-700 text-sm">
+                        <!-- Rendered by JavaScript dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <!-- Maintenance Priority Action Board (Enhancement Requirement) -->
+        <section class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden shadow-xl">
+            <div class="p-5 border-b border-gray-700 bg-gray-800/50">
+                <h2 class="text-lg font-bold text-white text-red-400">Predictive Maintenance Priority & Actions</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-900/60 text-gray-400 text-xs font-semibold uppercase border-b border-gray-700">
+                            <th class="p-4">Machine ID</th>
+                            <th class="p-4">Calculated Severity</th>
+                            <th class="p-4">Trigger Reason</th>
+                            <th class="p-4">Recommended Response Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="priority-table-body" class="divide-y divide-gray-700 text-sm">
+                        <!-- Rendered by JavaScript dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Application Logic & Live Simulator Engine -->
+    <script>
+        const VIBRATION_THRESHOLD = 7.5;
+        
+        // Initial Commit Base Dataset Requirement (5 core machines)
+        let machineryDataset = [
+            { id: "MAC-001", unit: "Assembly-A", hours: 1240, temp: 72, vibration: 4.2, downtime: 12, due: "2026-11-15", status: "Running" },
+            { id: "MAC-002", unit: "Assembly-A", hours: 3105, temp: 83, vibration: 5.1, downtime: 45, due: "2026-10-28", status: "Maintenance Due" },
+            { id: "MAC-003", unit: "Stamping-B", hours: 850,  temp: 68, vibration: 8.1, downtime: 5,  due: "2026-12-01", status: "Running" },
+            { id: "MAC-004", unit: "CNC-Shop",   hours: 4210, temp: 91, vibration: 9.4, downtime: 88, due: "2026-10-24", status: "Maintenance Due" },
+            { id: "MAC-005", unit: "CNC-Shop",   hours: 1980, temp: 75, vibration: 3.8, downtime: 20, due: "2026-11-20", status: "Down" }
+        ];
+
+        // Telemetry Engine Simulator loop
+        function runSimulation() {
+            machineryDataset = machineryDataset.map(machine => {
+                if (machine.status === "Down") {
+                    // Gradual cooling down when out of action
+                    machine.temp = Math.max(30, +(machine.temp - 0.5).toFixed(1));
+                    machine.vibration = Math.max(0.1, +(machine.vibration - 0.2).toFixed(1));
+                    return machine;
+                }
+                
+                // Fluctuating real-time factory conditions
+                const deltaTemp = (Math.random() - 0.5) * 4;
+                const deltaVib = (Math.random() - 0.5) * 1.2;
+                
+                machine.temp = +(machine.temp + deltaTemp).toFixed(1);
+                machine.vibration = Math.max(0.5, +(machine.vibration + deltaVib).toFixed(1));
+                machine.hours = +(machine.hours + 0.05).toFixed(2);
+                
+                // Dynamically tag status state depending on threshold warnings
+                if (machine.temp > 80 || machine.vibration > VIBRATION_THRESHOLD) {
+                    machine.status = "Maintenance Due";
+                }
+                
+                return machine;
+            });
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const selectedUnit = document.getElementById('filter-unit').value;
+            const selectedStatus = document.getElementById('filter-status').value;
+            
+            const filteredData = machineryDataset.filter(m => {
+                const matchUnit = selectedUnit === "All" || m.unit === selectedUnit;
+                const matchStatus = selectedStatus === "All" || m.status === selectedStatus;
+                return matchUnit && matchStatus;
+            });
+
+            // 1. Calculate Analytics & KPIs
+            const totalOperational = machineryDataset.filter(m => m.status === "Running").length;
+            const totalDowntime = machineryDataset.reduce((acc, m) => acc + m.downtime, 0);
+            
+            // Risk assessment mapping
+            let maxRiskScore = -1;
+            let highestRiskMachine = "Nominal Operations";
+            let priorityActions = [];
+
+            machineryDataset.forEach(m => {
+                let score = 0;
+                let triggers = [];
+    
